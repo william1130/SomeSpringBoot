@@ -1,5 +1,7 @@
 package org.wm.someSB.controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,12 +17,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @ApiOperation(value="say Hello to...", notes="")
     @RequestMapping(value = "/hello/{name}", method = RequestMethod.GET)
     public String sayWorld(@PathVariable("name") String name) {
 
         return "Hello " + name;
     }
 
+    @ApiOperation(value="註冊用戶", notes="註冊說明")
+    @ApiImplicitParam(name = "user", value = "參數說明", required = true, dataType = "User")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     @CachePut(cacheNames = "sysUser", key = "#user.id")
